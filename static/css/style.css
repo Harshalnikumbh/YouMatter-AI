@@ -370,4 +370,45 @@ body[data-bs-theme="dark"] .footer-icon i:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
     transform: translateY(-2px); 
 }  
+/* Mobile adjustments for user info in navbar */
+@media (max-width: 767px) {
+  .user-info {
+    flex-direction: row; /* horizontal layout still works */
+    gap: 0.3rem;        /* small spacing between pic and logout */
+  }
+
+  .user-info img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .user-info .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+/* Adjustments for smaller cards on mobile */
+@media (max-width: 576px) {
+    .card, .feature-card {
+        padding: 1rem;
+        border-radius: 12px;
+    }
+}
+/* Adjustments for smaller buttons on mobile */
+@media (max-width: 576px) {
+    .btn-primary, .signin-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 20px;
+    }
+}
+/* Adjustments for smaller hero text on mobile */
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .hero-description {
+        font-size: 1rem;
+    }
+}
 
