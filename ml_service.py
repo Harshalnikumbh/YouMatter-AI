@@ -29,7 +29,7 @@ class MentalHealthPredictor:
     
     def predict_mental_health(self, text: str) -> Dict:
         """Predict mental health status from text input"""
-        min_length = 200
+        min_length = 100
         if not text or len(text.strip()) < min_length:
             return {
                 'status': 'error',

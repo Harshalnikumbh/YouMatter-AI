@@ -207,7 +207,7 @@ def logout():
 @routes_bp.route('/submit_emotion', methods=['POST'])
 def submit_emotion():
     content = request.form.get('emotion_content', '').strip()
-    min_length = 200
+    min_length = 50
 
     # Validation check
     if not content or len(content) < min_length:
