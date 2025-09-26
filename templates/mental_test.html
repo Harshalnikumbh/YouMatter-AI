@@ -1,0 +1,368 @@
+{% extends "base.html" %}
+{% block title %}Take Mental Test - YouMatter{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <!-- Main Page Content -->
+  <div id="main-content">
+    <h2 class="mb-4 text-center">Discover Your Mental Health Status</h2>
+    <p class="text-center mb-5">
+      Take quick tests to understand your mental wellbeing. Analyse your
+      thoughts and get insights into your mood, anxiety, and stress levels.
+    </p>
+
+    <div class="row">
+      <!-- Depression Test Box -->
+      <div class="col-md-4 mb-4">
+        <div class="card text-center h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Depression Test</h5>
+            <p class="card-text">
+              Feeling low or down lately? Analyse your thoughts and understand
+              if you might be experiencing signs of depression.
+            </p>
+            <button id="depression-test-btn" class="btn btn-primary">Take Test</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anxiety Test Box -->
+      <div class="col-md-4 mb-4">
+        <div class="card text-center h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Anxiety Test</h5>
+            <p class="card-text">
+              Feeling nervous, restless, or worried? Analyse your feelings and
+              see if anxiety might be affecting your daily life.
+            </p>
+            <button id="anxiety-test-btn" class="btn btn-primary">Take Test</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stress Test Box -->
+      <div class="col-md-4 mb-4">
+        <div class="card text-center h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Stress Test</h5>
+            <p class="card-text">
+              Feeling overwhelmed or tense? Analyse your stress levels and learn
+              how to manage pressure effectively.
+            </p>
+            <button id="stress-test-btn" class="btn btn-primary">Take Test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Content Template -->
+  {% for test in ["depression", "anxiety", "stress"] %}
+  <div id="{{ test }}-test-content" style="display: none">
+    <!-- Welcome Screen -->
+    <div id="welcome-screen">
+      <div class="text-center">
+        <h2 class="mb-4">{{ test|capitalize }} Assessment Test</h2>
+        <p class="lead mb-4">
+          This test helps assess your current {{ test }} levels.
+        </p>
+        <button id="start-test-btn" class="btn btn-primary btn-lg px-5">Start Test</button>
+        <button id="back-to-main-btn" class="btn btn-outline-secondary btn-lg px-5 ms-3">Back</button>
+      </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" style="display: none">
+      <div class="text-center">
+        <div class="spinner-border text-primary" role="status" style="width: 4rem; height: 4rem">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <h3 class="mt-4">Our Model is Preparing Questions...</h3>
+        <p class="text-muted">Please wait while we customize your assessment</p>
+      </div>
+    </div>
+
+    <!-- Test Screen -->
+    <div id="test-screen" style="display: none">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="mb-4">
+            <div class="progress" style="height: 8px">
+              <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+              <span>Question <span id="current-question">1</span> of <span id="total-questions">20</span></span>
+              <span id="progress-percentage">0%</span>
+            </div>
+          </div>
+
+          <div class="card shadow">
+            <div class="card-body p-4">
+              <h5 id="question-text" class="card-title mb-4">Loading question...</h5>
+              <div id="options-container"></div>
+              <div class="d-flex justify-content-between mt-4">
+                <button id="prev-btn" class="btn btn-outline-secondary" disabled>Previous</button>
+                <button id="next-btn" class="btn btn-primary" disabled>Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" style="display: none">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card shadow">
+            <div class="card-body text-center p-5">
+              <h2 class="mb-4">Your Test Results</h2>
+              <div id="results-content">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading results...</span>
+                </div>
+                <p class="mt-2">Processing your results...</p>
+              </div>
+              <button id="retake-btn" class="btn btn-outline-primary mt-3">Take Test Again</button>
+              <button id="back-to-main-results-btn" class="btn btn-primary mt-3 ms-2">Back to Tests</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+class MentalTest {
+  constructor(type, contentId, buttonId) {
+    this.testType = type;
+    this.contentId = contentId;
+    this.buttonId = buttonId;
+    this.currentQuestionIndex = 0;
+    this.questions = [];
+    this.answers = [];
+    this.totalQuestions = 20;
+
+    this.initializeEventListeners();
+  }
+
+  initializeEventListeners() {
+    document.getElementById(this.buttonId).addEventListener("click", () => this.showTestContent());
+    const backBtns = document.querySelectorAll(`#${this.contentId} #back-to-main-btn, #${this.contentId} #back-to-main-results-btn`);
+    backBtns.forEach(btn => btn.addEventListener("click", () => this.showMainContent()));
+    const content = document.getElementById(this.contentId);
+    content.querySelector("#start-test-btn").addEventListener("click", () => this.startTest());
+    content.querySelector("#next-btn").addEventListener("click", () => this.nextQuestion());
+    content.querySelector("#prev-btn").addEventListener("click", () => this.prevQuestion());
+    content.querySelector("#retake-btn").addEventListener("click", () => this.resetTest());
+  }
+
+  showMainContent() {
+    document.getElementById("main-content").style.display = "block";
+    document.getElementById(this.contentId).style.display = "none";
+  }
+
+  showTestContent() {
+    document.getElementById("main-content").style.display = "none";
+    document.getElementById(this.contentId).style.display = "block";
+    this.showWelcomeScreen();
+  }
+
+  async startTest() {
+    this.showLoading();
+    try {
+      await this.delay(1000);
+      await this.fetchQuestions();
+      this.showTestScreen();
+      this.displayQuestion();
+    } catch (err) {
+      console.error("Error starting test:", err);
+      alert("Error loading test questions. Please try again.");
+      this.showWelcomeScreen();
+    }
+  }
+
+  async fetchQuestions() {
+    const response = await fetch("/api/get_questions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ test_type: this.testType, count: this.totalQuestions })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch questions: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    this.questions = data.questions;
+    this.answers = new Array(this.questions.length).fill(null);
+  }
+
+  displayQuestion() {
+    const q = this.questions[this.currentQuestionIndex];
+    const container = document.getElementById(this.contentId).querySelector("#options-container");
+    const questionText = document.getElementById(this.contentId).querySelector("#question-text");
+    questionText.textContent = q.text;
+
+    document.getElementById(this.contentId).querySelector("#current-question").textContent = this.currentQuestionIndex + 1;
+    document.getElementById(this.contentId).querySelector("#total-questions").textContent = this.questions.length;
+    const progress = ((this.currentQuestionIndex + 1) / this.questions.length) * 100;
+    document.getElementById(this.contentId).querySelector("#progress-bar").style.width = progress + "%";
+    document.getElementById(this.contentId).querySelector("#progress-percentage").textContent = Math.round(progress) + "%";
+
+    container.innerHTML = "";
+    q.options.forEach((option, index) => {
+      const div = document.createElement("div");
+      div.className = "form-check mb-3";
+      const input = document.createElement("input");
+      input.className = "form-check-input";
+      input.type = "radio";
+      input.name = "question-option";
+      input.id = "option-" + index;
+      input.value = option.value;
+      if (this.answers[this.currentQuestionIndex] === option.value) input.checked = true;
+      input.addEventListener("change", () => {
+        this.answers[this.currentQuestionIndex] = parseInt(option.value);
+        document.getElementById(this.contentId).querySelector("#next-btn").disabled = false;
+      });
+      const label = document.createElement("label");
+      label.className = "form-check-label";
+      label.htmlFor = "option-" + index;
+      label.textContent = option.text;
+      div.appendChild(input);
+      div.appendChild(label);
+      container.appendChild(div);
+    });
+
+    document.getElementById(this.contentId).querySelector("#prev-btn").disabled = this.currentQuestionIndex === 0;
+    document.getElementById(this.contentId).querySelector("#next-btn").disabled = this.answers[this.currentQuestionIndex] === null;
+  }
+
+  nextQuestion() {
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex++;
+      this.displayQuestion();
+    } else {
+      this.showResults();
+    }
+  }
+
+  prevQuestion() {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+      this.displayQuestion();
+    }
+  }
+
+  showTestScreen() {
+    const content = document.getElementById(this.contentId);
+    content.querySelector("#welcome-screen").style.display = "none";
+    content.querySelector("#loading-screen").style.display = "none";
+    content.querySelector("#test-screen").style.display = "block";
+    content.querySelector("#results-screen").style.display = "none";
+  }
+
+  showWelcomeScreen() {
+    const content = document.getElementById(this.contentId);
+    content.querySelector("#welcome-screen").style.display = "block";
+    content.querySelector("#loading-screen").style.display = "none";
+    content.querySelector("#test-screen").style.display = "none";
+    content.querySelector("#results-screen").style.display = "none";
+  }
+
+  showLoading() {
+    const content = document.getElementById(this.contentId);
+    content.querySelector("#welcome-screen").style.display = "none";
+    content.querySelector("#loading-screen").style.display = "block";
+    content.querySelector("#test-screen").style.display = "none";
+    content.querySelector("#results-screen").style.display = "none";
+  }
+
+  resetTest() {
+    this.currentQuestionIndex = 0;
+    this.answers.fill(null);
+    this.showWelcomeScreen();
+  }
+
+  async showResults() {
+    const content = document.getElementById(this.contentId);
+    content.querySelector("#test-screen").style.display = "none";
+    content.querySelector("#results-screen").style.display = "block";
+    
+    const resultContainer = content.querySelector("#results-content");
+    
+    // Show loading state while waiting for backend calculation
+    resultContainer.innerHTML = `
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading results...</span>
+      </div>
+      <p class="mt-2">Calculating your ${this.testType} assessment...</p>
+    `;
+
+    try {
+      const response = await fetch("/api/submit_test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          test_type: this.testType,
+          answers: this.answers.map((ans, idx) => ({
+            question_id: this.questions[idx].id,
+            response: ans
+          }))
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.success) {
+        // Display results entirely from backend calculation
+        resultContainer.innerHTML = `
+          <div class="alert alert-info">
+            <h4 class="alert-heading">${this.testType.charAt(0).toUpperCase() + this.testType.slice(1)} Assessment Results</h4>
+            <hr>
+            <p class="mb-2"><strong>Total Score:</strong> ${data.total_score}</p>
+            <p class="mb-2"><strong>Category:</strong> <span class="badge bg-primary">${data.category || data.severity}</span></p>
+            ${data.description ? `<p class="mt-3"><small class="text-muted">${data.description}</small></p>` : ''}
+          </div>
+          <div class="alert alert-warning mt-3">
+            <small><strong>Disclaimer:</strong> This is a screening tool only and not a diagnostic instrument. Please consult a healthcare professional for proper evaluation and diagnosis.</small>
+          </div>
+        `;
+      } else {
+        resultContainer.innerHTML = `
+          <div class="alert alert-danger">
+            <h5>Error Processing Results</h5>
+            <p>${data.error || 'Unable to calculate results. Please try again.'}</p>
+          </div>
+        `;
+      }
+    } catch (err) {
+      console.error("Error submitting test:", err);
+      resultContainer.innerHTML = `
+        <div class="alert alert-danger">
+          <h5>Connection Error</h5>
+          <p>Unable to submit test results. Please check your connection and try again.</p>
+        </div>
+      `;
+    }
+  }
+
+  delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+}
+
+// Initialize all three tests after class definition
+document.addEventListener('DOMContentLoaded', function() {
+  new MentalTest("depression", "depression-test-content", "depression-test-btn");
+  new MentalTest("anxiety", "anxiety-test-content", "anxiety-test-btn");
+  new MentalTest("stress", "stress-test-content", "stress-test-btn");
+});
+</script>
+{% endblock %}

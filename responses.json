@@ -1,0 +1,109 @@
+[
+    {
+        "timestamp": "2025-09-19T17:52:43.534885",
+        "responses": [
+            {
+                "id": 1,
+                "response": 1
+            },
+            {
+                "id": 2,
+                "response": 1
+            },
+            {
+                "id": 3,
+                "response": -1
+            }
+        ],
+        "analysis": {
+            "total_score": 1,
+            "severity": "None/Minimal",
+            "score_range": "-3 to 3",
+            "total_questions": 3,
+            "yes_count": 2,
+            "no_count": 0,
+            "prefer_not_count": 1,
+            "percentage_positive": 66.7,
+            "timestamp": "2025-09-19T17:52:43.534885"
+        }
+    },
+    {
+        "timestamp": "2025-09-19T17:58:23.143259",
+        "responses": [
+            {
+                "id": 1,
+                "response": 1
+            },
+            {
+                "id": 2,
+                "response": -1
+            },
+            {
+                "id": 3,
+                "response": 1
+            },
+            {
+                "id": 4,
+                "response": 1
+            },
+            {
+                "id": 5,
+                "response": 1
+            },
+            {
+                "id": 6,
+                "response": 1
+            },
+            {
+                "id": 7,
+                "response": 1
+            },
+            {
+                "id": 8,
+                "response": 0
+            },
+            {
+                "id": 9,
+                "response": 1
+            },
+            {
+                "id": 10,
+                "response": 1
+            },
+            {
+                "id": 11,
+                "response": 0
+            },
+            {
+                "id": 12,
+                "response": 1
+            },
+            {
+                "id": 13,
+                "response": 1
+            },
+            {
+                "id": 14,
+                "response": 0
+            },
+            {
+                "id": 15,
+                "response": 1
+            }
+        ],
+        "analysis": {
+            "total_score": 10,
+            "severity": "Moderate",
+            "score_range": "-15 to 15",
+            "total_questions": 15,
+            "yes_count": 11,
+            "no_count": 3,
+            "prefer_not_count": 1,
+            "percentage_positive": 73.3,
+            "timestamp": "2025-09-19T17:58:23.143259"
+        }
+    }
+]{"timestamp": "2025-09-21T13:55:35.552135", "responses": [{"question_id": 21, "response": 1}, {"question_id": 13, "response": 0}, {"question_id": 35, "response": 1}, {"question_id": 24, "response": 1}, {"question_id": 16, "response": -1}, {"question_id": 28, "response": 1}, {"question_id": 12, "response": -1}, {"question_id": 38, "response": 1}, {"question_id": 31, "response": -1}, {"question_id": 27, "response": 1}, {"question_id": 10, "response": 1}, {"question_id": 49, "response": 0}, {"question_id": 42, "response": 1}, {"question_id": 47, "response": -1}, {"question_id": 11, "response": 1}, {"question_id": 17, "response": 0}, {"question_id": 9, "response": -1}, {"question_id": 6, "response": 1}, {"question_id": 41, "response": 0}, {"question_id": 33, "response": 1}], "analysis": {"total_score": 6, "severity": "Mild", "max_possible_score": 20, "min_possible_score": -20, "total_questions": 20, "yes_count": 11, "no_count": 4, "prefer_not_count": 5, "percentage_positive": 55.0, "timestamp": "2025-09-21T13:55:35.552135"}}
+{"timestamp": "2025-09-25T11:14:57.881220", "responses": [{"question_id": 47, "response": 1}, {"question_id": 24, "response": 1}, {"question_id": 49, "response": 1}, {"question_id": 34, "response": 1}, {"question_id": 41, "response": 1}, {"question_id": 22, "response": 1}, {"question_id": 25, "response": 1}, {"question_id": 33, "response": 0}, {"question_id": 14, "response": -1}, {"question_id": 37, "response": -1}, {"question_id": 6, "response": 1}, {"question_id": 30, "response": 0}, {"question_id": 12, "response": -1}, {"question_id": 29, "response": 1}, {"question_id": 1, "response": 1}, {"question_id": 19, "response": 1}, {"question_id": 36, "response": 0}, {"question_id": 31, "response": -1}, {"question_id": 27, "response": 1}, {"question_id": 20, "response": 0}], "analysis": {"total_score": 8, "severity": "Mild", "max_possible_score": 20, "min_possible_score": -20, "total_questions": 20, "yes_count": 12, "no_count": 4, "prefer_not_count": 4, "percentage_positive": 60.0, "timestamp": "2025-09-25T11:14:57.881220"}}
+{"timestamp": "2025-09-25T12:06:57.215510", "test_type": "depression", "responses": [{"question_id": 1, "response": 1}, {"question_id": 19, "response": 1}, {"question_id": 20, "response": 1}, {"question_id": 21, "response": 1}, {"question_id": 18, "response": 1}, {"question_id": 7, "response": 1}, {"question_id": 15, "response": 1}, {"question_id": 30, "response": 1}, {"question_id": 5, "response": 1}, {"question_id": 22, "response": 0}, {"question_id": 48, "response": -1}, {"question_id": 6, "response": 1}, {"question_id": 12, "response": 0}, {"question_id": 3, "response": 1}, {"question_id": 14, "response": -1}, {"question_id": 46, "response": 1}, {"question_id": 2, "response": 0}, {"question_id": 42, "response": 1}, {"question_id": 44, "response": 1}, {"question_id": 9, "response": 1}], "analysis": {"total_score": 13, "severity": "Severe", "max_possible_score": 20, "min_possible_score": -20, "total_questions": 20, "yes_count": 15, "no_count": 3, "prefer_not_count": 2, "percentage_positive": 75.0, "timestamp": "2025-09-25T12:06:57.215510"}}
+{"timestamp": "2025-09-25T12:18:42.298081", "test_type": "anxiety", "responses": [{"question_id": 35, "response": 1}, {"question_id": 39, "response": 0}, {"question_id": 19, "response": 1}, {"question_id": 23, "response": -1}, {"question_id": 2, "response": 1}, {"question_id": 32, "response": 1}, {"question_id": 45, "response": 1}, {"question_id": 30, "response": 1}, {"question_id": 22, "response": 0}, {"question_id": 21, "response": 1}, {"question_id": 25, "response": 1}, {"question_id": 15, "response": 1}, {"question_id": 5, "response": 1}, {"question_id": 38, "response": -1}, {"question_id": 3, "response": 1}, {"question_id": 44, "response": 1}, {"question_id": 4, "response": 1}, {"question_id": 42, "response": 1}, {"question_id": 50, "response": -1}, {"question_id": 17, "response": 0}], "analysis": {"total_score": 11, "severity": "Moderate", "category": "Moderate", "max_possible_score": 20, "min_possible_score": -20, "total_questions": 20, "yes_count": 14, "no_count": 3, "prefer_not_count": 3, "percentage_positive": 70.0, "timestamp": "2025-09-25T12:18:42.298081", "test_type": "anxiety"}}

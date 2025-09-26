@@ -1,0 +1,181 @@
+{% extends "base.html" %} {% block content %}
+<!-- Hero Section -->
+<section class="hero py-5">
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h1 class="hero-title mb-3">
+          YouMatter – AI That Listens, Understands, and Supports
+        </h1>
+        <p class="hero-description mb-2">
+          Text your thoughts. We're listening, we care.
+        </p>
+        <p class="hero-subtitle text-muted">
+          Your thoughts matter. Share how you feel, and we'll help you
+          understand your mental state better.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Input Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow">
+          <div class="card-body p-4">
+            <h3 class="text-center mb-4">Tell us how you're feeling today</h3>
+            <form method="POST" action="{{ url_for('routes.submit_emotion') }}">
+              <div class="mb-3">
+                <textarea
+                  class="form-control emotion-input"
+                  name="emotion_content"
+                  rows="6"
+                  placeholder="Write here about what you're going through. Be honest and open — we're here for you."
+                  required
+                >
+{{ user_text|default('') }}</textarea
+                >
+                <div class="text-end mt-2">
+                  <small class="text-muted char-count">
+                    {{ user_text|length if user_text else 0 }} characters
+                  </small>
+                </div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg px-4">
+                  Begin Self Check-In
+                </button>
+              </div>
+            </form>
+
+            <!-- Prediction Output -->
+             {% if prediction_label %}
+<div class="mt-4 p-3 border rounded bg-white shadow-sm">
+ <h5>
+   Predicted Emotion:
+   <strong>{{ prediction_label|capitalize }}</strong>
+ </h5>
+ <p>
+   Confidence:
+   <strong>{{ "%.2f"|format(prediction_confidence) }}%</strong>
+ </p>
+ <p class="text-muted">{{ compassion_message }}</p>
+ 
+ {% if recommendations %}
+ <h5 class="mt-3">Recommendations:</h5>
+ <div class="row g-3">
+   {% for rec in recommendations %}
+   <div class="col-md-6">
+     <div class="card shadow-sm h-100 border-0">
+       <div class="card-body">
+         <p class="mb-0">{{ rec }}</p>
+       </div>
+     </div>
+   </div>
+   {% endfor %}
+ </div>
+ {% endif %}
+  
+  {% if show_resources %}
+ <h5 class="mt-3">Helpful Resources:</h5>
+ <div class="row g-3">
+   {% for resource in resources %}
+   <div class="col-md-6">
+     <div class="card shadow-sm h-100 border-0">
+       <div class="card-body">
+         <h6 class="card-title">{{ resource.name }}</h6>
+         <a href="{{ resource.url }}" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm">Visit Resource</a>
+       </div>
+     </div>
+   </div>
+   {% endfor %}
+ </div>
+ {% endif %}
+ 
+</div>
+{% endif %}
+<!-- End Prediction Output -->
+
+      
+            <!-- End Prediction Output -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">About Us</h2>
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <p>
+          YouMatter is an AI-powered mental health detector designed to provide timely emotional support and raise awareness about mental well-being.Trained on 6,00,000+ real-world data entries, our model achieves an accuracy of 79%, making it a reliable tool to identify patterns of emotional struggles such as anxiety, depression, and loneliness.
+        </p>
+        <p>
+          In today’s fast-paced world, mental health struggles often remain unseen and unspoken.YouMatter provides a safe, private, and intelligent space where individuals can freely express their thoughts through text and receive meaningful insights into their emotional well-being.
+          By combining empathy with technology, YouMatter aims to make emotional support more accessible, reliable, and stigma-free.
+        </p>
+        <h4 class="mt-4 mb-3">What It's Made to Do</h4>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon text-primary mb-3">
+                <i data-feather="edit-3" width="48" height="48"></i>
+              </div>
+              <h5>Text-Based Emotional Screening</h5>
+              <p>
+                Users enter what they're feeling in a text box. Our system
+                analyzes the language using natural language processing to
+                detect emotional patterns.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon text-primary mb-3">
+                <i data-feather="activity" width="48" height="48"></i>
+              </div>
+              <h5>Mental Health Signal Detection</h5>
+              <p>
+                YouMatter uses machine learning to detect signs such as Anxiety, Depression, or when things are Normal.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon text-primary mb-3">
+                <i data-feather="shield" width="48" height="48"></i>
+              </div>
+              <h5>Instant and Private Feedback</h5>
+              <p>
+                The system provides a private, non-judgmental reflection on the
+                user's input, offering reassurance or suggestions to encourage
+                awareness and self-care.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon text-primary mb-3">
+                <i data-feather="sunrise" width="48" height="48"></i>
+              </div>
+              <h5>Promoting Early Awareness</h5>
+              <p>
+                YouMatter aims to reduce the stigma around mental health by
+                enabling users to take the first step toward understanding their
+                emotional state.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - YouMatter{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero py-5 bg-light">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="hero-title mb-3">Contact Us</h1>
+                <p class="hero-description mb-2">We're here to help and support you</p>
+                <p class="hero-subtitle text-muted">Have questions or need support? Reach out to us and we'll get back to you as soon as possible.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <div class="text-primary mb-3">
+                            <i data-feather="mail" width="48" height="48"></i>
+                        </div>
+                        <h4>Email Us</h4>
+                        <a href="mailto:youmattercare.in@gmail.com" class="text-decoration-none">
+                            youmattercare.in@gmail.com
+                        </a>
+                        <p class="text-muted mt-2">Send us your questions, feedback, or concerns. We typically respond within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <div class="text-success mb-3">
+                            <i data-feather="clock" width="48" height="48"></i>
+                        </div>
+                        <h4>Response Time</h4>
+                        <p class="fw-bold">Within 24 hours</p>
+                        <p class="text-muted">We strive to respond to all inquiries promptly and provide the support you need.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <div class="text-danger mb-3">
+                            <i data-feather="heart" width="48" height="48"></i>
+                        </div>
+                        <h4>We're Here for You</h4>
+                        <p class="fw-bold">Your mental health matters</p>
+                        <p class="text-muted">Whether you need technical support or just someone to talk to, don't hesitate to reach out.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
